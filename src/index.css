@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+.bg-gradient {
+  background: linear-gradient(to bottom, #C1E7D6, #D1E8F0);
+}
+
+.bg-surface {
+  background-color: #FFFFFF;
+}
+
+.text-primary {
+  color: #4A4A6A;
+}
+
+.text-secondary {
+  color: #B0B0C0;
+}
+
+.text-tertiary {
+  color: #808080;
+}
+
+.text-token {
+  color: #F5A623;
+}
+
+.bg-button-secondary {
+  background-color: #D8D8E0;
+}
+
+.bg-button-teal {
+  background-color: #A3D8D3;
+}
+
+.hover:bg-lavender {
+  background-color: #D4C4E0;
+}
+
+.radio-accent {
+  color: #F4A7B9;
+}
+
+.focus-ring-accent:focus {
+  --tw-ring-color: #F4A7B9;
+}
+
+.border-secondary {
+  border-color: #B0B0C0;
+}
+
+.placeholder-secondary::placeholder {
+  color: #B0B0C0;
+}
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+}

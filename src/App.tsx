@@ -19,11 +19,11 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0E1426] text-white">
+    <div className="min-h-screen bg-gradient">
       <Header />
       <main className="container mx-auto p-4 max-w-4xl">
         <TransactionForm onResult={handleResult} onError={handleError} />
-        {error && <div className="mt-4 text-[#FF5555] text-center">{error}</div>}
+        {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
         {result && <TransactionResult result={result} />}
       </main>
     </div>

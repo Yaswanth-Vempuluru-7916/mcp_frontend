@@ -33,35 +33,35 @@ function TransactionForm({ onResult, onError }: TransactionFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#0E1426] p-6 rounded-lg shadow-md border border-[#2A314D] max-w-md mx-auto mt-8">
-      <h2 className="text-xl font-semibold mb-4 text-[#00E6EE]">Check Transaction Status</h2>
+    <form onSubmit={handleSubmit} className="bg-surface p-6 rounded-lg shadow-md max-w-md mx-auto mt-8">
+      <h2 className="text-xl font-semibold mb-4 text-primary">Check Transaction Status</h2>
       <div className="mb-4">
-        <label className="block mb-2 text-sm font-medium text-[#B8C4E9]">Input Type</label>
+        <label className="block mb-2 text-sm font-medium text-primary">Input Type</label>
         <div className="flex space-x-4">
-          <label className="flex items-center text-[#B8C4E9]">
+          <label className="flex items-center text-primary">
             <input
               type="radio"
               value="initiator_source_address"
               checked={inputType === 'initiator_source_address'}
               onChange={() => setInputType('initiator_source_address')}
-              className="mr-2 text-[#00F6FF] focus:ring-[#00F6FF]"
+              className="mr-2 radio-accent focus-ring-accent focus:ring-2 focus:ring-offset-2"
             />
             Initiator Source Address
           </label>
-          <label className="flex items-center text-[#B8C4E9]">
+          <label className="flex items-center text-primary">
             <input
               type="radio"
               value="create_id"
               checked={inputType === 'create_id'}
               onChange={() => setInputType('create_id')}
-              className="mr-2 text-[#00F6FF] focus:ring-[#00F6FF]"
+              className="mr-2 radio-accent focus-ring-accent focus:ring-2 focus:ring-offset-2"
             />
             Create ID
           </label>
         </div>
       </div>
       <div className="mb-4">
-        <label htmlFor="inputValue" className="block mb-2 text-sm font-medium text-[#B8C4E9]">
+        <label htmlFor="inputValue" className="block mb-2 text-sm font-medium text-primary">
           {inputType === 'initiator_source_address' ? 'Initiator Source Address' : 'Create ID'}
         </label>
         <input
@@ -69,14 +69,14 @@ function TransactionForm({ onResult, onError }: TransactionFormProps) {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="w-full p-2 rounded bg-[#171E34] text-white border border-[#4B567D] focus:outline-none focus:ring-2 focus:ring-[#00F6FF] transition-colors"
+          className="w-full p-2 rounded bg-surface text-primary border border-secondary focus:outline-none focus:ring-2 focus:ring-accent placeholder-secondary"
           placeholder={`Enter ${inputType === 'initiator_source_address' ? 'initiator source address' : 'create ID'}`}
         />
       </div>
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-[#00F6FF] text-[#0E1426] py-2 rounded-lg font-semibold hover:bg-[#00E6EE] disabled:bg-[#0097A0] transition-colors"
+        className="w-full bg-button-teal text-primary py-2 rounded-lg font-semibold hover:bg-lavender disabled:opacity-50"
       >
         {isLoading ? 'Loading...' : 'Check Status'}
       </button>

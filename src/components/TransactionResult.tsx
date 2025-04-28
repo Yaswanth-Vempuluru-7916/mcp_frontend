@@ -118,7 +118,16 @@ function TransactionResult({ data }: TransactionResultProps) {
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        Transaction Status Results
+        Transaction Status Results : {
+          data.result.status.user_initiated ? 
+            data.result.status.cobi_initiated ? 
+              (data.result.status.user_redeemed && data.result.status.cobi_redeemed) || 
+              (data.result.status.user_refunded && data.result.status.cobi_refunded) ? 
+                'Order Completed' 
+              : 'Order Not Yet Completed' 
+            : 'Cobi Not Initiated' 
+          : 'User Not Initiated'
+        }
       </h2>
 
       {/* Transaction Status Table */}

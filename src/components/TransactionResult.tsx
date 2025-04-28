@@ -104,18 +104,6 @@ function TransactionResult({ data }: TransactionResultProps) {
                     </pre>
                   )}
                 </div>
-
-                {/* Order Created Section */}
-                {logs[container].create_order_success !== undefined && (
-                  <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                    <p className="flex items-center">
-                      <strong className="text-gray-700 mr-2">Order Created:</strong>
-                      <span className={logs[container].create_order_success ? 'text-green-600 font-medium' : 'text-red-600 font-medium'}>
-                        {logs[container].create_order_success ? 'Yes' : 'No'}
-                      </span>
-                    </p>
-                  </div>
-                )}
               </>
             )}
           </div>

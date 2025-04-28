@@ -24,8 +24,10 @@ function TransactionForm({ onResult, onError }: TransactionFormProps) {
       const data = await fetchTransactionStatus({
         [inputType]: inputValue.trim(),
       });
+      console.log('Fetched data:', data); // Debug log
       onResult({ result: data });
     } catch (err: any) {
+      console.error('Submit error:', err);
       onError(err.message || 'Failed to fetch transaction status.');
     } finally {
       setIsLoading(false);

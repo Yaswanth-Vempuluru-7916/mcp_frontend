@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Header from './components/Header';
 import TransactionForm from './components/TransactionForm';
 import TransactionResult from './components/TransactionResult';
 import { TransactionResponse } from './types';
@@ -13,19 +12,21 @@ function App() {
     setError(null);
   };
 
-  const handleError = (err: string) => {
-    setError(err);
+  const handleError = (error: string) => {
+    setError(error);
     setResult(null);
   };
 
   return (
-    <div className="min-h-screen bg-gradient">
-      <Header />
-      <main className="container mx-auto p-4 max-w-4xl">
-        <TransactionForm onResult={handleResult} onError={handleError} />
-        {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
-        {result && <TransactionResult result={result} />}
-      </main>
+    <div className="bg-gradient min-h-screen p-4">
+      <h1 className="text-3xl font-bold text-center text-primary mb-8">Transaction Status Dashboard</h1>
+      <TransactionForm onResult={handleResult} onError={handleError} />
+      {error && (
+        <div className="max-w-md mx-auto mt-4 p-4 bg-surface rounded-lg shadow-md">
+          <p className="text-red-500">{error}</p>
+        </div>
+      )}
+      {result && <TransactionResult data={result} />}
     </div>
   );
 }

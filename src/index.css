@@ -9,15 +9,15 @@
 }
 
 .text-primary {
-  color: #4A4A6A;
+  color: #5e6a4a;
 }
 
 .text-secondary {
-  color: #B0B0C0;
+  color: #10d2d5;
 }
 
 .text-tertiary {
-  color: #808080;
+  color: #ace413;
 }
 
 .text-token {
@@ -32,12 +32,12 @@
   background-color: #A3D8D3;
 }
 
-.hover:bg-lavender {
+.bg-lavender {
   background-color: #D4C4E0;
 }
 
 .radio-accent {
-  color: #F4A7B9;
+  accent-color: #F4A7B9;
 }
 
 .focus-ring-accent:focus {
@@ -50,6 +50,38 @@
 
 .placeholder-secondary::placeholder {
   color: #B0B0C0;
+}
+
+.database-results {
+  color: teal; /* Teal for database results */
+}
+
+.matched-order-ids {
+  color: rgb(65, 245, 15); /* Lavender for matched order IDs */
+}
+
+.logs {
+  color: rgb(231, 46, 77); /* Pink for logs */
+}
+
+.matched-order-api {
+  color: rgb(235, 12, 49); /* Pink for matched order API */
+}
+
+.status-summary {
+  color: rgb(12, 194, 155); /* Pink for status summary */
+}
+
+.text-primary {
+  color: #2d3748; /* Dark gray for headings */
+}
+
+.text-secondary {
+  color: #718096; /* Lighter gray for content */
+}
+
+.text-red-500 {
+  color: #f56565; /* Red for errors */
 }
 
 @layer base {

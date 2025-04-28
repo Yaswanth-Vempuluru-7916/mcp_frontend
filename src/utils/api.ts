@@ -1,17 +1,24 @@
-import axios from 'axios';
+import { TransactionResponse } from '../types';
 
-const MCP_SERVER_URL = 'http://localhost:10000';
-
-export const fetchTransactionStatus = async (payload: {
-  initiator_source_address?: string;
+interface FetchParams {
   create_id?: string;
-}): Promise<string> => {
-  try {
-    const response = await axios.post(`${MCP_SERVER_URL}/tools/check_transaction_status`, {
-      arguments: payload,
-    });
-    return response.data;
-  } catch (err: any) {
-    throw new Error(err.response?.data?.detail || 'Failed to fetch transaction status');
+  initiator_source_address?: string;
+}
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+export const fetchTransactionStatus = async (params: FetchParams): Promise<TransactionResponse['result']> => {
+  const query = new URLSearchParams();
+  if (params.create_id) {
+    query.append('create_id', params.create_id);
   }
+  if (params.initiator_source_address) {
+    query.append('initiator_source_address', params.initiator_source_address);
+  }
+
+  const response = await fetch(`${baseUrl}/api/transaction_status?${query.toString()}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch transaction status');
+  }
+  return response.json();
 };

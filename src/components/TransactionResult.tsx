@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TransactionResponse } from '../types';
+import ReactMarkdown from 'react-markdown';
 
 interface TransactionResultProps {
   data: TransactionResponse;
@@ -7,7 +8,6 @@ interface TransactionResultProps {
 
 function TransactionResult({ data }: TransactionResultProps) {
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
-  const [showRawLogs, setShowRawLogs] = useState<{ [key: string]: boolean }>({});
   const [showFilteredLogs, setShowFilteredLogs] = useState<{ [key: string]: boolean }>({});
 
   const toggleSection = (section: string) => {
@@ -17,12 +17,6 @@ function TransactionResult({ data }: TransactionResultProps) {
     }));
   };
 
-  const toggleRawLogs = (container: string) => {
-    setShowRawLogs((prev) => ({
-      ...prev,
-      [container]: !prev[container],
-    }));
-  };
 
   const toggleFilteredLogs = (container: string) => {
     setShowFilteredLogs((prev) => ({
@@ -51,39 +45,26 @@ function TransactionResult({ data }: TransactionResultProps) {
               <>
                 {/* Analysis Section */}
                 <p className="font-semibold text-gray-900 mb-2 text-lg">Analysis:</p>
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-200 shadow-md">
-                  {logs[container].analysis ? 
-                    logs[container].analysis.split(/\.\s+/).map((sentence, idx) => (
-                      sentence.trim() && (
-                        <p key={idx} className="mb-2 text-gray-800 flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          {sentence.trim()}{sentence.trim().endsWith('.') ? '' : '.'}
-                        </p>
-                      )
-                    )) : 
-                    <p className="text-gray-500 italic">No analysis available</p>
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-200 shadow-md overflow-x-auto">
+                  {logs[container].analysis ?
+                    logs[container].analysis
+                      .split('\n')
+                      .map(s => s.trim())
+                      .filter(Boolean) // Remove empty strings
+                      .map((sentence, idx) => (
+                        <div key={idx} className="mb-2 text-gray-800 flex items-start break-words whitespace-pre-wrap">
+                          <div className="prose prose-blue max-w-none">
+                            <ReactMarkdown>
+                              {sentence.endsWith('.') ? sentence : sentence + '.'}
+                            </ReactMarkdown>
+                          </div>
+                        </div>
+                      ))
+                    : <p className="text-gray-500 italic">No analysis available</p>
                   }
+
                 </div>
 
-                {/* Raw Logs Section with Toggle */}
-                <div className="mt-4">
-                  <button
-                    className="w-full text-left px-4 py-2 rounded-lg flex justify-between items-center bg-gray-100 hover:bg-gray-200 transition-colors"
-                    onClick={() => toggleRawLogs(container)}
-                  >
-                    <span className="font-semibold text-gray-700">Raw Logs</span>
-                    <span className="text-gray-600 transition-transform duration-200" style={{ transform: showRawLogs[container] ? 'rotate(180deg)' : 'rotate(0deg)' }}>
-                      ▼
-                    </span>
-                  </button>
-                  {showRawLogs[container] && (
-                    <pre className="mt-2 bg-gray-800 text-gray-100 p-3 rounded-lg max-h-64 overflow-auto text-sm font-mono">
-                      {logs[container].raw_logs.length > 0
-                        ? logs[container].raw_logs.join('\n')
-                        : 'No logs found'}
-                    </pre>
-                  )}
-                </div>
 
                 {/* Filtered Logs Section with Toggle */}
                 <div className="mt-4">
@@ -119,14 +100,14 @@ function TransactionResult({ data }: TransactionResultProps) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         Transaction Status Results : {
-          data.result.status.user_initiated ? 
-            data.result.status.cobi_initiated ? 
-              (data.result.status.user_redeemed && data.result.status.cobi_redeemed) || 
-              (data.result.status.user_refunded && data.result.status.cobi_refunded) ? 
-                'Order Completed' 
-              : 'Order Not Yet Completed' 
-            : 'Cobi Not Initiated' 
-          : 'User Not Initiated'
+          data.result.status.user_initiated ?
+            data.result.status.cobi_initiated ?
+              (data.result.status.user_redeemed && data.result.status.cobi_redeemed) ||
+                (data.result.status.user_refunded && data.result.status.cobi_refunded) ?
+                'Order Completed'
+                : 'Order Not Yet Completed'
+              : 'Cobi Not Initiated'
+            : 'User Not Initiated'
         }
       </h2>
 
@@ -217,7 +198,7 @@ function TransactionResult({ data }: TransactionResultProps) {
               <ul className="divide-y divide-gray-100">
                 {Object.entries(data.result.database).map(([key, value]) => (
                   <li key={key} className="py-3 flex flex-wrap">
-                    <strong className="text-gray-700 min-w-32">{key}:</strong> 
+                    <strong className="text-gray-700 min-w-32">{key}:</strong>
                     <span className="text-gray-600 ml-2">{value}</span>
                   </li>
                 ))}

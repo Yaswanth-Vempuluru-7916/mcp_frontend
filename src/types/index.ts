@@ -22,7 +22,6 @@ export interface TransactionResponse {
     };
     logs: {
       [container: string]: {
-        raw_logs: string[];
         filtered_logs?: string[];
         analysis?: string;
         create_order_success?: boolean;
